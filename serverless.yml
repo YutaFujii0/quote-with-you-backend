@@ -25,9 +25,9 @@ functions:
     memorySize: 128
     description: Get quote
     events:
-      - http:
-          path: quote
-          method: get
+      - httpApi:
+          method: GET
+          path: /quotes/pick
 
 resources:
   Resources:
