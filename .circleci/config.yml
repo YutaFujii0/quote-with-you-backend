@@ -11,8 +11,8 @@ jobs:
     steps:
       - checkout
       - run: node --version
-      - run: export PATH="$PATH:$(yarn global bin)"
-      - run: yarn global add serverless
+      - run: yarn global bin
+      - run: yarn global add serverless --prefix /usr/local
       - run: yarn -i
       - run: sls deploy --stage dev
 
