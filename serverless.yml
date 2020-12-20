@@ -5,7 +5,7 @@ frameworkVersion: '2'
 
 provider:
   name: aws
-  runtime: nodejs15.4
+  runtime: nodejs12.x
   stage: dev
   region: ap-northeast-1
   environment:

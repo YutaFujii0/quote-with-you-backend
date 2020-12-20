@@ -4,16 +4,17 @@ jobs:
   deploy:
     working_directory: ~/yutafujii0/serverless-quote-service
     docker:
-      - image: 'cimg/node:15.4.0'
+      - image: 'cimg/node:12'
         auth:
           username: yutafujii
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run: node --version
+      - run: export PATH="$PATH:$(yarn global bin)"
       - run: yarn global add serverless
       - run: yarn -i
-      - run: yarn run sls deploy -v
+      - run: sls deploy --stage dev
 
 workflows:
   main:
