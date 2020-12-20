@@ -13,7 +13,7 @@ jobs:
       - run: node --version
       - run: yarn global add serverless
       - run: yarn -i
-      - run: sls deploy -v
+      - run: yarn run sls deploy -v
 
 workflows:
   main:
