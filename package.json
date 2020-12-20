@@ -1,7 +1,13 @@
 {
   "name": "serverless-quote-service",
   "dependencies": {
-    "bluebird": "^3.7.2",
+    "aws-sdk": "^2.817.0",
+    "csv-parser": "^3.0.0",
+    "es-dirname": "^0.1.0",
+    "got": "^11.8.1",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "serverless-bundle": "^4.1.0"
   }
 }

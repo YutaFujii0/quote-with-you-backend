@@ -3,13 +3,16 @@ app: quote-service-api
 
 frameworkVersion: '2'
 
+plugins:
+  - serverless-bundle
+
 provider:
   name: aws
   runtime: nodejs12.x
   stage: dev
   region: ap-northeast-1
   environment:
-    QUOTE_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    QUOTE_TABLE: ${self:service}-${opt:stage, self:provider.stage}1
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -17,32 +20,62 @@ provider:
         - dynamodb:Scan
         - dynamodb:GetItem
         - dynamodb:PutItem
+        - dynamodb:BatchWriteItem
       Resource: "*"
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:s3:::'
+            - 'Ref': QuotesSeedBucket
+            - '/*'
+
 
 functions:
   getQuote:
-    handler: api/quote.get
+    handler: api/quote.pick
     memorySize: 128
     description: Get quote
     events:
       - httpApi:
           method: GET
           path: /quotes/pick
+  seedQuote:
+    handler: api/quote.seed
+    memorySize: 128
+    description: Get quote
+    events:
+      - httpApi:
+          method: GET
+          path: /quotes/seed
 
 resources:
   Resources:
+    QuotesSeedBucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        AccessControl: PublicRead
+        BucketName: serverless-quote-service
     QuotesDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:
         AttributeDefinitions:
           -
+            AttributeName: "lang"
+            AttributeType: "S"
+          -
             AttributeName: "id"
             AttributeType: "S"
         KeySchema:
           -
-            AttributeName: "id"
+            AttributeName: "lang"
             KeyType: "HASH"
+          -
+            AttributeName: "id"
+            KeyType: "RANGE"
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

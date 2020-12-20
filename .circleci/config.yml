@@ -6,20 +6,20 @@ jobs:
     docker:
       - image: 'cimg/node:12.20.0'
         auth:
-          username: yutafujii
+          username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run: node --version
-      - run: yarn global bin
-      - run: yarn global add serverless --prefix /usr/local
+      - run: yarn global add serverless
       - run: yarn -i
-      - run: sls deploy --stage dev
+      - run: /home/circleci/.yarn/bin/serverless deploy --stage dev
 
 workflows:
   main:
     jobs:
       - deploy:
+          context: dockerhub
           filters:
             branches:
               only: master
