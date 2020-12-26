@@ -8,6 +8,38 @@ AWS.config.setPromisesDependency(Promise);
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 const pick = (event, context, callback) => {
+  const randomRangeKey = uuidv4();
+  let params = {
+    TableName: process.env.QUOTE_TABLE,
+    ProjectionExpression: "quote, whose",
+    KeyConditionExpression: "lang = :lang and id > :randomRangeKey",
+    ExpressionAttributeValues: {
+      ":lang": "ja",
+      ":randomRangeKey": randomRangeKey
+    },
+    Limit: 1
+  };
+
+  console.log("Querying.");
+  const onQuery = (err, data) => {
+      if (err) {
+          console.log('Query failed to load data. Error JSON:', JSON.stringify(err, null, 2));
+          callback(err);
+      } else {
+          console.log("Query succeeded.");
+          return callback(null, {
+              statusCode: 200,
+              body: JSON.stringify({
+                  quote: data.Items
+              })
+          });
+      }
+  };
+
+  dynamoDb.query(params, onQuery);
+};
+
+const list = (event, context, callback) => {
   let params = {
     TableName: process.env.QUOTE_TABLE,
     ProjectionExpression: "id, lang, quote, whose"
@@ -92,4 +124,4 @@ const sleep = (ms) => {
   });
 }
 
-export { pick, seed };
+export { pick, list, seed };

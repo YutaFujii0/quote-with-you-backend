@@ -42,6 +42,14 @@ functions:
       - httpApi:
           method: GET
           path: /quotes/pick
+  listQuotes:
+    handler: api/quote.list
+    memorySize: 128
+    description: Get quote
+    events:
+      - httpApi:
+          method: GET
+          path: /quotes/list
   seedQuote:
     handler: api/quote.seed
     memorySize: 128
