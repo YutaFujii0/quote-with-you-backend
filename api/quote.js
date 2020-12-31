@@ -29,6 +29,10 @@ const pick = (event, context, callback) => {
           console.log("Query succeeded.");
           return callback(null, {
               statusCode: 200,
+              headers: {
+                'Access-Control-Allow-Origin': 'https://*.yutafujii.net',
+                'Access-Control-Allow-Credentials': true,
+              },
               body: JSON.stringify({
                   quote: data.Items
               })
@@ -55,6 +59,10 @@ const list = (event, context, callback) => {
           console.log("Scan succeeded.");
           return callback(null, {
               statusCode: 200,
+              headers: {
+                'Access-Control-Allow-Origin': 'https://*.yutafujii.net',
+                'Access-Control-Allow-Credentials': true,
+              },
               body: JSON.stringify({
                   quote: data.Items
               })
@@ -76,6 +84,10 @@ const seed = (event, context, callback) => {
         console.log("Batch write succeeded.");
         return callback(null, {
             statusCode: 200,
+            headers: {
+              'Access-Control-Allow-Origin': 'https://*.yutafujii.net',
+              'Access-Control-Allow-Credentials': true,
+            },
             body: JSON.stringify({
                 quote: data
             })
