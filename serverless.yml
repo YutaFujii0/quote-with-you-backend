@@ -42,6 +42,7 @@ functions:
       - httpApi:
           method: GET
           path: /quotes/pick
+          cors: true
   listQuotes:
     handler: api/quote.list
     memorySize: 128
@@ -50,6 +51,7 @@ functions:
       - httpApi:
           method: GET
           path: /quotes/list
+          cors: true
   seedQuote:
     handler: api/quote.seed
     memorySize: 128
@@ -58,6 +60,7 @@ functions:
       - httpApi:
           method: GET
           path: /quotes/seed
+          cors: true
 
 resources:
   Resources:

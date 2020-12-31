@@ -30,7 +30,7 @@ const pick = (event, context, callback) => {
           return callback(null, {
               statusCode: 200,
               headers: {
-                'Access-Control-Allow-Origin': 'https://*.yutafujii.net',
+                'Access-Control-Allow-Origin': 'https://20201219-cloudfront-demo.yutafujii.net',
                 'Access-Control-Allow-Credentials': true,
               },
               body: JSON.stringify({
@@ -60,7 +60,7 @@ const list = (event, context, callback) => {
           return callback(null, {
               statusCode: 200,
               headers: {
-                'Access-Control-Allow-Origin': 'https://*.yutafujii.net',
+                'Access-Control-Allow-Origin': 'https://20201219-cloudfront-demo.yutafujii.net',
                 'Access-Control-Allow-Credentials': true,
               },
               body: JSON.stringify({
@@ -85,7 +85,7 @@ const seed = (event, context, callback) => {
         return callback(null, {
             statusCode: 200,
             headers: {
-              'Access-Control-Allow-Origin': 'https://*.yutafujii.net',
+              'Access-Control-Allow-Origin': 'https://20201219-cloudfront-demo.yutafujii.net',
               'Access-Control-Allow-Credentials': true,
             },
             body: JSON.stringify({
