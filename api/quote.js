@@ -14,7 +14,7 @@ const pick = (event, context, callback) => {
     ProjectionExpression: "quote, whose",
     KeyConditionExpression: "lang = :lang and id > :randomRangeKey",
     ExpressionAttributeValues: {
-      ":lang": "ja",
+      ":lang": event.queryStringParameters.lang || "en",
       ":randomRangeKey": randomRangeKey
     },
     Limit: 1
