@@ -13,6 +13,7 @@ provider:
   region: ap-northeast-1
   environment:
     QUOTE_TABLE: ${self:service}-${opt:stage, self:provider.stage}1
+    ALLOW_ORIGIN: 'https://quote2you.yutafujii.net'
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -42,7 +43,9 @@ functions:
       - httpApi:
           method: GET
           path: /quotes/pick
-          cors: true
+          cors:
+            origin: ${self:provider.environment.ALLOW_ORIGIN}
+            allowCredentials: true
   listQuotes:
     handler: api/quote.list
     memorySize: 128
@@ -51,7 +54,9 @@ functions:
       - httpApi:
           method: GET
           path: /quotes/list
-          cors: true
+          cors:
+            origin: ${self:provider.environment.ALLOW_ORIGIN}
+            allowCredentials: true
   seedQuote:
     handler: api/quote.seed
     memorySize: 128
@@ -60,7 +65,9 @@ functions:
       - httpApi:
           method: GET
           path: /quotes/seed
-          cors: true
+          cors:
+            origin: ${self:provider.environment.ALLOW_ORIGIN}
+            allowCredentials: true
 
 resources:
   Resources:
