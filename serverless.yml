@@ -43,9 +43,6 @@ functions:
       - httpApi:
           method: GET
           path: /quotes/pick
-          cors:
-            origin: ${self:provider.environment.ALLOW_ORIGIN}
-            allowCredentials: true
   listQuotes:
     handler: api/quote.list
     memorySize: 128
@@ -54,9 +51,6 @@ functions:
       - httpApi:
           method: GET
           path: /quotes/list
-          cors:
-            origin: ${self:provider.environment.ALLOW_ORIGIN}
-            allowCredentials: true
   seedQuote:
     handler: api/quote.seed
     memorySize: 128
@@ -65,9 +59,6 @@ functions:
       - httpApi:
           method: GET
           path: /quotes/seed
-          cors:
-            origin: ${self:provider.environment.ALLOW_ORIGIN}
-            allowCredentials: true
 
 resources:
   Resources:
@@ -76,6 +67,17 @@ resources:
       Properties:
         AccessControl: PublicRead
         BucketName: serverless-quote-service
+    GatewayCORS:
+      Type: 'AWS::ApiGatewayV2::Api'
+      Properties:
+        Name: ${self:provider.stage}-${self:service}
+        ProtocolType: HTTP
+        CorsConfiguration:
+          AllowCredentials: true
+          AllowHeaders:
+            - ${self:provider.environment.ALLOW_ORIGIN}
+          AllowMethods:
+            - GET
     QuotesDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain

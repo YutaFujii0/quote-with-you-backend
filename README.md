@@ -67,6 +67,13 @@ Run lambda function locally, create `event.json` and
 $ sls invoke local -f function-name -p event.json
 ```
 
+To generate Cloudformation file without deploy, run
+
+```
+$ sls package
+
+# this generates json files in .serverless/ directory
+```
 # Going further
 
 In a real situation, you might also want to make those APIs available to public.
